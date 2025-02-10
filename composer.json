@@ -7,7 +7,7 @@
         "ext-simplexml": "*",
         "bensampo/laravel-enum": "1.*",
         "brick/math": ">=0.6",
-        "illuminate/support": "^10.0"
+        "illuminate/support": "^11.0"
     },
     "require-dev": {
         "orchestra/testbench": "^3.8",

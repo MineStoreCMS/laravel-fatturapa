@@ -43,6 +43,17 @@ class GeneralDocumentData extends Tag
      */
     private $description = null;
 
+    private ?string $bolloVirtuale = null;
+    private ?string $importoBollo = null;
+
+    public function setDatiBollo(string $bolloVirtuale, string $importoBollo): self
+    {
+        $this->bolloVirtuale = $bolloVirtuale;
+        $this->importoBollo = $importoBollo;
+
+        return $this;
+    }
+
     public function setType(Type $type): self
     {
         $this->type = DocumentType::make()->setType($type);
@@ -96,6 +107,17 @@ class GeneralDocumentData extends Tag
         $e->appendChild($this->currency->toDOMElement($dom));
         $e->appendChild($this->date->toDOMElement($dom));
         $e->appendChild($this->number->toDOMElement($dom));
+
+        if ($this->bolloVirtuale !== null && $this->importoBollo !== null) {
+            $datiBollo = $dom->createElement('DatiBollo');
+            $bolloVirtuale = $dom->createElement('BolloVirtuale', $this->bolloVirtuale);
+            $importoBollo = $dom->createElement('ImportoBollo', $this->importoBollo);
+
+            $datiBollo->appendChild($bolloVirtuale);
+            $datiBollo->appendChild($importoBollo);
+
+            $e->appendChild($datiBollo);
+        }
 
         if ($this->amount) {
             $e->appendChild($this->amount->toDOMElement($dom));

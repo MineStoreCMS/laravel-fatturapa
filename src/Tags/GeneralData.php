@@ -76,9 +76,7 @@ class GeneralData extends Tag
 
     public function setDatiBollo(string $bolloVirtuale, string $importoBollo): self
     {
-        $this->bolloVirtuale = $bolloVirtuale;
-        $this->importoBollo = $importoBollo;
-
+        $this->generalDocumentData->setDatiBollo($bolloVirtuale, $importoBollo);
         return $this;
     }
 
@@ -88,20 +86,7 @@ class GeneralData extends Tag
     public function toDOMElement(DOMDocument $dom): DOMElement
     {
         $e = $dom->createElement('DatiGenerali');
-
         $e->appendChild($this->generalDocumentData->toDOMElement($dom));
-
-        if ($this->bolloVirtuale !== null && $this->importoBollo !== null) {
-            $datiBollo = $dom->createElement('DatiBollo');
-
-            $bolloVirtuale = $dom->createElement('BolloVirtuale', $this->bolloVirtuale);
-            $importoBollo = $dom->createElement('ImportoBollo', $this->importoBollo);
-
-            $datiBollo->appendChild($bolloVirtuale);
-            $datiBollo->appendChild($importoBollo);
-
-            $e->appendChild($datiBollo);
-        }
 
         return $e;
     }

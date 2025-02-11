@@ -48,6 +48,20 @@ class Supplier extends Tag
         return $this;
     }
 
+    public function setFirstName(string $name): self
+    {
+        $this->taxableEntity->setFirstName($name);
+
+        return $this;
+    }
+
+    public function setLastName(string $name): self
+    {
+        $this->taxableEntity->setLastName($name);
+
+        return $this;
+    }
+
     public function setVatNumber(string $countryCode, string $vatNumber): self
     {
         $this->taxableEntity->setVatNumber($countryCode, $vatNumber);

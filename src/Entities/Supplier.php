@@ -25,6 +25,16 @@ class Supplier extends Entity
     private $companyName;
 
     /**
+     * @var string
+     */
+    private $firstName;
+
+    /**
+     * @var string
+     */
+    private $lastName;
+
+    /**
      * @var ?string
      */
     private $fiscalCode;
@@ -92,6 +102,20 @@ class Supplier extends Entity
     public function companyName(string $companyName): self
     {
         $this->companyName = $companyName;
+
+        return $this;
+    }
+
+    public function firstName(string $firstName): self
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    public function lastName(string $lastName): self
+    {
+        $this->lastName = $lastName;
 
         return $this;
     }
@@ -189,9 +213,21 @@ class Supplier extends Entity
     {
         $tag = SupplierTag::make()
             ->setVatNumber($this->vatCountryId, $this->vatNumber)
-            ->setTaxRegime($this->taxRegime)
-            ->setCompanyName($this->companyName)
-            ->setAddress($this->address->getTag());
+            ->setTaxRegime($this->taxRegime);
+
+        if ($this->companyName !== null) {
+            $tag = $tag->setCompanyName($this->companyName);
+        }
+
+        if ($this->firstName !== null) {
+            $tag = $tag->setFirstName($this->firstName);
+        }
+
+        if ($this->lastName !== null) {
+            $tag = $tag->setLastName($this->lastName);
+        }
+
+        $tag = $tag->setAddress($this->address->getTag());
 
         if ($this->fiscalCode) {
             $tag->setFiscalCode($this->fiscalCode);

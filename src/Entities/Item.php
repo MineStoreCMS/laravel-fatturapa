@@ -6,6 +6,7 @@ use Brick\Math\BigDecimal;
 use Condividendo\FatturaPA\Tags\Item as ItemTag;
 use Condividendo\FatturaPA\Traits\Makeable;
 use Condividendo\FatturaPA\Traits\UsesDecimal;
+use Condividendo\FatturaPA\Enums\Nature;
 
 class Item extends Entity
 {
@@ -41,6 +42,11 @@ class Item extends Entity
      * @var \Brick\Math\BigDecimal
      */
     private $taxRate;
+
+    /**
+     * @var ?\Condividendo\FatturaPA\Enums\Nature
+     */
+    private $nature;
 
     public function number(int $lineNumber): self
     {
@@ -100,6 +106,17 @@ class Item extends Entity
         return $this;
     }
 
+    /**
+     * @param \Condividendo\FatturaPA\Enums\Nature $nature
+     * @return $this
+     */
+    public function nature(Nature $nature): self
+    {
+        $this->nature = $nature;
+
+        return $this;
+    }
+
     public function getTag(): ItemTag
     {
         $tag = ItemTag::make()
@@ -107,7 +124,8 @@ class Item extends Entity
             ->setDescription($this->description)
             ->setTaxRate($this->taxRate)
             ->setUnitPrice($this->unitPrice)
-            ->setTotalAmount($this->totalPrice ?: $this->calculateTotalAmount());
+            ->setTotalAmount($this->totalPrice ?: $this->calculateTotalAmount())
+            ->setNature($this->nature);
 
         if ($this->quantity) {
             $tag->setQuantity($this->quantity);

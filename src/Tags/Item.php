@@ -41,6 +41,11 @@ class Item extends Tag
      */
     private $vatTax;
 
+    /**
+     * @var \Condividendo\FatturaPA\Tags\Nature
+     */
+    private $nature;
+
     public function setLineNumber(int $lineNumber): self
     {
         $this->lineNumber = LineNumber::make()->setNumber($lineNumber);
@@ -83,6 +88,13 @@ class Item extends Tag
         return $this;
     }
 
+    public function setNature(\Condividendo\FatturaPA\Enums\Nature $nature): self
+    {
+        $this->nature = Nature::make()->setNature($nature);
+
+        return $this;
+    }
+
     /**
      * @noinspection PhpUnhandledExceptionInspection
      */
@@ -100,6 +112,7 @@ class Item extends Tag
         $e->appendChild($this->unitPrice->toDOMElement($dom));
         $e->appendChild($this->totalPrice->toDOMElement($dom));
         $e->appendChild($this->vatTax->toDOMElement($dom));
+        $e->appendChild($this->nature->toDOMElement($dom));
 
         return $e;
     }

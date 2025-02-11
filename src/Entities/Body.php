@@ -80,6 +80,21 @@ class Body extends Entity
      */
     private $summaryItems;
 
+    /**
+     * @var ?\Brick\Math\BigDecimal
+     */
+    private $totalAmount;
+
+    /**
+     * @var string|null
+     */
+    private $bolloVirtuale = null;
+
+    /**
+     * @var string|null
+     */
+    private $importoBollo = null;
+
     public function type(Type $type): self
     {
         $this->type = $type;
@@ -150,6 +165,14 @@ class Body extends Entity
         return $this;
     }
 
+    public function setDatiBollo($totalAmount): self
+    {
+        $this->bolloVirtuale = $totalAmount >= 70 ? 'SI' : 'NO';
+        $this->importoBollo = $totalAmount >= 70 ? '2.00' : '0.00';
+
+        return $this;
+    }
+
     public function paymentMethod(PaymentMethod $paymentMethod): self
     {
         $this->paymentMethod = $paymentMethod;
@@ -207,8 +230,9 @@ class Body extends Entity
             ->setItems($items)
             ->setSummaryItems($summaryItems);
 
-        if ($this->amount) {
-            $body->setDocumentAmount($this->amount);
+        // Handling setDatiBollo
+        if ($this->bolloVirtuale !== null && $this->importoBollo !== null) {
+            $body->setDatiBollo($this->bolloVirtuale, $this->importoBollo);
         }
 
         if ($this->description) {

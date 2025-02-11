@@ -103,6 +103,13 @@ class Body extends Tag
         return $this;
     }
 
+    public function setDatiBollo(string $bolloVirtuale, string $importoBollo): self
+    {
+        $this->generalData->setDatiBollo($bolloVirtuale, $importoBollo);
+
+        return $this;
+    }
+
     public function setGoodsServicesData(GoodsServicesData $gsData): self
     {
         $this->goodsServicesData = $gsData;

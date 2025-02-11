@@ -17,6 +17,8 @@ class GeneralData extends Tag
      * @var \Condividendo\FatturaPA\Tags\GeneralDocumentData
      */
     private $generalDocumentData;
+    private ?string $bolloVirtuale = null;
+    private ?string $importoBollo = null;
 
     public function __construct()
     {
@@ -72,6 +74,14 @@ class GeneralData extends Tag
         return $this;
     }
 
+    public function setDatiBollo(string $bolloVirtuale, string $importoBollo): self
+    {
+        $this->bolloVirtuale = $bolloVirtuale;
+        $this->importoBollo = $importoBollo;
+
+        return $this;
+    }
+
     /**
      * @noinspection PhpUnhandledExceptionInspection
      */
@@ -80,6 +90,18 @@ class GeneralData extends Tag
         $e = $dom->createElement('DatiGenerali');
 
         $e->appendChild($this->generalDocumentData->toDOMElement($dom));
+
+        if ($this->bolloVirtuale !== null && $this->importoBollo !== null) {
+            $datiBollo = $dom->createElement('DatiBollo');
+
+            $bolloVirtuale = $dom->createElement('BolloVirtuale', $this->bolloVirtuale);
+            $importoBollo = $dom->createElement('ImportoBollo', $this->importoBollo);
+
+            $datiBollo->appendChild($bolloVirtuale);
+            $datiBollo->appendChild($importoBollo);
+
+            $e->appendChild($datiBollo);
+        }
 
         return $e;
     }

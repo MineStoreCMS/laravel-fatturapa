@@ -108,7 +108,7 @@ class GeneralDocumentData extends Tag
         $e->appendChild($this->date->toDOMElement($dom));
         $e->appendChild($this->number->toDOMElement($dom));
 
-        if ($this->bolloVirtuale !== null && $this->importoBollo !== null) {
+        if ($this->bolloVirtuale !== null && $this->importoBollo !== null && $this->bolloVirtuale !== 'NO') {
             $datiBollo = $dom->createElement('DatiBollo');
             $bolloVirtuale = $dom->createElement('BolloVirtuale', $this->bolloVirtuale);
             $importoBollo = $dom->createElement('ImportoBollo', $this->importoBollo);

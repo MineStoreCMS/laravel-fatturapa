@@ -97,7 +97,9 @@ class Address extends Tag
 
         $e->appendChild($this->postalCode->toDOMElement($dom));
         $e->appendChild($this->city->toDOMElement($dom));
-        $e->appendChild($this->provinceOrState->toDOMElement($dom));
+        if ($this->provinceOrState) {
+            $e->appendChild($this->provinceOrState->toDOMElement($dom));
+        }
         $e->appendChild($this->country->toDOMElement($dom));
 
         return $e;

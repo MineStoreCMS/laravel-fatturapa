@@ -30,7 +30,7 @@ class Address extends Entity
     private $postalCode;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $provinceOrState;
 
@@ -67,7 +67,7 @@ class Address extends Entity
         return $this;
     }
 
-    public function province(string $province): self
+    public function province(string|null $province): self
     {
         $this->provinceOrState = $province;
 
@@ -92,8 +92,11 @@ class Address extends Entity
             ->setAddressLine($this->addressLine)
             ->setCity($this->city)
             ->setPostalCode($this->postalCode)
-            ->setProvince($this->provinceOrState)
             ->setCountry($this->country);
+
+        if ($this->provinceOrState !== null) {
+            $tag->setProvince($this->provinceOrState);
+        }
 
         if ($this->streetNumber) {
             $tag->setStreetNumber($this->streetNumber);

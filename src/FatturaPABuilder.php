@@ -160,9 +160,7 @@ class FatturaPABuilder
             return '0000000';
         }
 
-        return $country === 'IT'
-            ? $this->recipientCode
-            : 'XXXXXXX';
+        return $this->recipientCode;
     }
 
     public function toDOM(): DOMDocument

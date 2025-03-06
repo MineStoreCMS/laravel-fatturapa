@@ -68,7 +68,16 @@ class Item extends Entity
      */
     public function quantity($quantity): self
     {
-        $this->quantity = static::makeDecimal($quantity);
+        if (is_numeric($quantity)) {
+            if ($quantity instanceof \Brick\Math\BigDecimal) {
+                $this->quantity = $quantity;
+            } else {
+                $formattedValue = number_format((float)$quantity, 2, '.', '');
+                $this->quantity = \Brick\Math\BigDecimal::of($formattedValue);
+            }
+        } else {
+            $this->quantity = \Brick\Math\BigDecimal::of('0.00');
+        }
 
         return $this;
     }
